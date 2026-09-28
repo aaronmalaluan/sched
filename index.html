@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Board — Class Schedule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="board">
+
+    <!-- HEADER: live clock + timezone switch -->
+    <header class="header">
+      <div class="header-top">
+        <h1 class="title">Board</h1>
+        <nav class="page-nav">
+          <span class="page-nav-link is-active">Board</span>
+          <a href="grid.html" class="page-nav-link">Grid</a>
+        </nav>
+      </div>
+
+      <div class="tz-row">
+        <div class="tz-switch" role="group" aria-label="Choose time zone">
+          <button class="tz-btn is-active" data-tz="local" type="button">Local</button>
+          <button class="tz-btn" data-tz="ph" type="button">Manila</button>
+        </div>
+      </div>
+
+      <div class="clock-row">
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="clock-meta">
+          <span id="clockDate">—</span>
+          <span class="dot">·</span>
+          <span id="clockZone">—</span>
+        </div>
+      </div>
+
+      <!-- NOW PLAYING strip -->
+      <div class="now-strip" id="nowStrip">
+        <span class="now-label">Right now</span>
+        <span class="now-value" id="nowValue">Nothing scheduled</span>
+      </div>
+    </header>
+
+    <!-- ADD CLASS FORM -->
+    <section class="panel" id="formPanel">
+      <button class="panel-toggle" id="formToggle" type="button" aria-expanded="false">
+        <span>Add a class</span>
+        <span class="chevron">＋</span>
+      </button>
+
+      <form class="add-form" id="addForm" hidden>
+        <div class="field">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="e.g. Data Structures" required maxlength="60">
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="room">Room / notes <span class="optional">(optional)</span></label>
+            <input type="text" id="room" placeholder="e.g. Rm 302" maxlength="40">
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="startTime">Starts</label>
+            <input type="time" id="startTime" required>
+          </div>
+          <div class="field">
+            <label for="endTime">Ends</label>
+            <input type="time" id="endTime" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Days</label>
+          <div class="day-picker" id="dayPicker">
+            <button type="button" class="day-chip" data-day="0">Sun</button>
+            <button type="button" class="day-chip" data-day="1">Mon</button>
+            <button type="button" class="day-chip" data-day="2">Tue</button>
+            <button type="button" class="day-chip" data-day="3">Wed</button>
+            <button type="button" class="day-chip" data-day="4">Thu</button>
+            <button type="button" class="day-chip" data-day="5">Fri</button>
+            <button type="button" class="day-chip" data-day="6">Sat</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="colorTag">Tag color</label>
+          <div class="color-picker" id="colorPicker">
+            <button type="button" class="color-swatch is-active" data-color="amber" style="--swatch:#e8a33d"></button>
+            <button type="button" class="color-swatch" data-color="sage" style="--swatch:#6fa287"></button>
+            <button type="button" class="color-swatch" data-color="sky" style="--swatch:#5f9bd1"></button>
+            <button type="button" class="color-swatch" data-color="rose" style="--swatch:#d1738f"></button>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Save class</button>
+          <button type="button" class="btn-ghost" id="cancelForm">Cancel</button>
+        </div>
+        <p class="form-error" id="formError" hidden></p>
+      </form>
+    </section>
+
+    <!-- SCHEDULE VIEW CONTROLS -->
+    <div class="view-controls">
+      <div class="view-switch" role="group" aria-label="Filter schedule">
+        <button class="view-btn is-active" data-view="today" type="button">Today</button>
+        <button class="view-btn" data-view="week" type="button">Whole week</button>
+      </div>
+      <span class="count-badge" id="countBadge">0 classes</span>
+    </div>
+
+    <!-- SCHEDULE LIST -->
+    <main>
+      <div class="empty-state" id="emptyState" hidden>
+        <p>No classes on the board yet.</p>
+        <p class="empty-sub">Add your first one above — it'll show up here, sorted by time.</p>
+      </div>
+
+      <div class="schedule-list" id="scheduleList"></div>
+    </main>
+
+    <footer class="footer">
+      <span>Times are checked every second. Status updates on its own — no need to refresh.</span>
+    </footer>
+  </div>
+
+  <!-- Row template -->
+  <template id="rowTemplate">
+    <article class="row">
+      <div class="row-flap">
+        <span class="flap-text"></span>
+      </div>
+      <div class="row-main">
+        <div class="row-top">
+          <h3 class="row-subject"></h3>
+          <button class="row-delete" type="button" aria-label="Delete class">✕</button>
+        </div>
+        <div class="row-meta">
+          <span class="row-time"></span>
+          <span class="dot">·</span>
+          <span class="row-days"></span>
+          <span class="row-room"></span>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>

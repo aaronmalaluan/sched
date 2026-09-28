@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Grid — Class Schedule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="grid.css">
+</head>
+<body>
+
+  <div class="board board--wide">
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="header-top">
+        <h1 class="title">Weekly Grid</h1>
+        <nav class="page-nav">
+          <a href="index.html" class="page-nav-link">Board</a>
+          <span class="page-nav-link is-active">Grid</span>
+        </nav>
+      </div>
+      <div class="clock-row">
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="clock-meta">
+          <span id="clockDate">—</span>
+          <span class="dot">·</span>
+          <span id="clockZone">—</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- GRID -->
+    <section class="grid-wrap">
+      <div class="grid-scroll">
+        <table class="grid-table" id="gridTable" aria-label="Weekly class schedule">
+          <thead id="gridHead"></thead>
+          <tbody id="gridBody"></tbody>
+        </table>
+      </div>
+
+      <p class="grid-empty" id="gridEmptyNote" hidden>
+        No classes on the board yet — add some from the <a href="index.html">Board</a> page and they'll show up here.
+      </p>
+    </section>
+
+    <!-- EXAMS / THINGS TO DO (optional) -->
+    <section class="panel task-panel">
+      <button class="panel-toggle" id="taskToggle" type="button" aria-expanded="false">
+        <span>Exams &amp; things to do <span class="optional-inline">(optional)</span></span>
+        <span class="chevron">＋</span>
+      </button>
+
+      <form class="add-form" id="taskForm" hidden>
+        <div class="field">
+          <label for="taskTitle">Title</label>
+          <input type="text" id="taskTitle" placeholder="e.g. Prelim exam — IT 313" required maxlength="80">
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="taskType">Type</label>
+            <select id="taskType">
+              <option value="exam">Exam</option>
+              <option value="requirement">Requirement</option>
+              <option value="activity">Activity</option>
+              <option value="other" selected>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="taskDate">Date</label>
+            <input type="date" id="taskDate" required>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="taskTime">Time <span class="optional">(optional)</span></label>
+            <input type="time" id="taskTime">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="taskNotes">Notes <span class="optional">(optional)</span></label>
+          <input type="text" id="taskNotes" placeholder="e.g. Bring calculator, Rm 302" maxlength="120">
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Save</button>
+          <button type="button" class="btn-ghost" id="cancelTaskForm">Cancel</button>
+        </div>
+        <p class="form-error" id="taskFormError" hidden></p>
+      </form>
+
+      <div class="task-list" id="taskList"></div>
+      <p class="task-empty" id="taskEmpty">Nothing added yet — this list is entirely optional.</p>
+    </section>
+
+    <footer class="footer">
+      <span>The grid mirrors whatever you've added on the Board page. The current day column and live class are highlighted automatically.</span>
+    </footer>
+  </div>
+
+  <!-- Task row template -->
+  <template id="taskTemplate">
+    <article class="task-row">
+      <label class="task-check">
+        <input type="checkbox" class="task-done-box">
+      </label>
+      <div class="task-main">
+        <div class="task-top">
+          <span class="task-tag"></span>
+          <h4 class="task-title"></h4>
+        </div>
+        <div class="task-meta">
+          <span class="task-date"></span>
+          <span class="task-notes"></span>
+        </div>
+      </div>
+      <button class="row-delete task-delete" type="button" aria-label="Delete item">✕</button>
+    </article>
+  </template>
+
+  <script src="grid.js"></script>
+</body>
+</html>

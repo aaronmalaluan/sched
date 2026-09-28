@@ -1,0 +1,232 @@
+/* ---------------------------------------------------
+   Grid wrapper
+--------------------------------------------------- */
+.grid-wrap{
+  margin-bottom: 24px;
+}
+
+.grid-scroll{
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+}
+
+.grid-empty{
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.grid-empty a{ color: var(--amber); }
+
+/* ---------------------------------------------------
+   Table
+--------------------------------------------------- */
+.grid-table{
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 760px;
+  font-family: var(--font-mono);
+}
+
+.grid-table th,
+.grid-table td{
+  border: 1px solid var(--border);
+  padding: 5px 6px;
+  font-size: 11.5px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Header rows */
+.grid-table thead th{
+  background: var(--panel-raised);
+  color: var(--ink-muted);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.grid-table thead .day-head{
+  font-size: 12px;
+}
+
+.grid-table thead .sub-head{
+  font-size: 10px;
+  color: var(--ink-muted);
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.grid-table thead th.time-head{
+  min-width: 92px;
+}
+
+.grid-table thead th.is-today{
+  color: var(--amber);
+}
+
+/* Time column */
+.grid-table td.time-cell{
+  background: var(--panel-raised);
+  color: var(--ink-muted);
+  font-size: 10.5px;
+  text-align: left;
+  padding-left: 8px;
+  min-width: 92px;
+}
+
+/* Zebra striping on empty rows for readability */
+.grid-table tbody tr:nth-child(even) td.slot-cell{
+  background: rgba(255,255,255,0.015);
+}
+
+/* Day column subtle "today" tint */
+.grid-table td.is-today-col{
+  background: rgba(232,163,61,0.05);
+}
+
+/* Occupied cell (has a class in it) */
+.slot-cell.has-class{
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.slot-cell .cell-subject{
+  display: block;
+  font-weight: 700;
+}
+
+.slot-cell .cell-room{
+  display: block;
+  font-weight: 500;
+  color: var(--ink-muted);
+  font-size: 10.5px;
+}
+
+.slot-cell.is-ditto .cell-subject,
+.slot-cell.is-ditto .cell-room{
+  color: var(--ink-muted);
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Currently live class cell */
+.slot-cell.is-live{
+  background: color-mix(in srgb, var(--tag-color, var(--amber)) 22%, var(--panel));
+  box-shadow: inset 0 0 0 1px var(--tag-color, var(--amber));
+}
+
+/* "now" row marker */
+.grid-table tr.is-now-row td.time-cell{
+  color: var(--amber);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------
+   Task panel (exams / things to do)
+--------------------------------------------------- */
+.task-panel{
+  padding-bottom: 6px;
+}
+
+select{
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--ink);
+  padding: 9px 10px;
+  font-size: 14px;
+}
+
+.task-list{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 16px 12px;
+}
+
+.task-empty{
+  text-align: center;
+  font-size: 12.5px;
+  color: var(--ink-muted);
+  padding: 0 16px 16px;
+  margin: 0;
+}
+
+.task-row{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ink-muted);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+
+.task-row.is-today{ border-left-color: var(--rose); }
+.task-row.is-soon{ border-left-color: var(--amber); }
+.task-row.is-done{ opacity: 0.45; }
+
+.task-check input{
+  width: 16px;
+  height: 16px;
+  accent-color: var(--amber);
+}
+
+.task-main{ flex: 1; min-width: 0; }
+
+.task-top{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-tag{
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 2px 5px;
+  flex-shrink: 0;
+}
+
+.task-title{
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-row.is-done .task-title{
+  text-decoration: line-through;
+}
+
+.task-meta{
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-muted);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.task-notes:empty{ display: none; }
+
+/* ---------------------------------------------------
+   Responsive
+--------------------------------------------------- */
+@media (max-width: 640px){
+  .grid-table{ font-size: 10.5px; }
+}
